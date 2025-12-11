@@ -12,12 +12,6 @@ vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' }
 -- Add an <esc> keybind to save time (and fingers)
 vim.api.nvim_set_keymap('i', 'jk', '<Esc>', { noremap = false })
 
--- TIP: Disable arrow keys in normal mode
-vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
-vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
-vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
-vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
-
 -- Keybinds to make split navigation easier.
 -- Use CTRL+<hjkl> to switch between windows
 -- :help wincmd for a list of all window commands
@@ -33,3 +27,20 @@ vim.keymap.set('n', '<C-S-j>', '<C-w>J', { desc = 'Move window to the lower' })
 vim.keymap.set('n', '<C-S-k>', '<C-w>K', { desc = 'Move window to the upper' })
 
 vim.keymap.set('n', '<leader>cd', ':cd %:h<CR>', { desc = '[C]hange [D]irectory' })
+
+-- Keyboard users
+vim.keymap.set('n', '<C-t>', function()
+  require('menu').open 'default'
+end, {})
+
+-- mouse users + nvimtree users!
+vim.keymap.set({ 'n', 'v' }, '<RightMouse>', function()
+  require('menu.utils').delete_old_menus()
+  vim.cmd.exec '"normal! \\<RightMouse>"'
+
+  -- clicked buf
+  local buf = vim.api.nvim_win_get_buf(vim.fn.getmousepos().winid)
+  local options = vim.bo[buf].ft == 'NvimTree' and 'nvimtree' or 'default'
+
+  require('menu').open(options, { mouse = true })
+end, {})

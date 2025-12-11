@@ -1,14 +1,15 @@
 return {
   {
-    'propet/colorscheme-persist.nvim',
+    'tingey21/telescope-colorscheme-persist.nvim',
     lazy = false, -- Required: Load on startup to set the colorscheme
-    config = true, -- Required: call setup() function
+    config = function()
+      require('telescope-colorscheme-persist').setup {
+        keybind = '<leader>ft',
+      }
+    end,
+
     dependencies = {
       'nvim-telescope/telescope.nvim',
-      -- NOTE: Add your colorscheme plugins here if you want lazy.nvim
-      -- to manage them directly within this plugin specification.
-      -- Otherwise, ensure they are installed elsewhere in your config.
-      -- Example:
 
       'folke/tokyonight.nvim',
       'rebelot/kanagawa.nvim',
@@ -23,25 +24,5 @@ return {
       'ribru17/bamboo.nvim',
       'catppuccin/nvim',
     },
-    -- Set a keymap to open the picker
-    keys = {
-      {
-        '<leader>ft', -- Or your preferred keymap
-        function()
-          require('colorscheme-persist').picker()
-        end,
-        mode = 'n',
-        desc = '[F]ind [T]hemes',
-      },
-    },
-    -- Optional: Configure the plugin (see Configuration section below)
-    opts = {
-      -- Add custom options here, for example:
-      -- fallback = "space-nvim",
-    },
   },
-
-  -- 'xiyaowong/transparent.nvim',
-
-  -- vim.keymap.set('n', '<leader>tt', vim.cmd.TransparentToggle, { desc = '[T]oggle [T]ransparent' }),
 }

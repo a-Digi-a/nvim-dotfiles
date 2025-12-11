@@ -2,7 +2,6 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
-require 'settings.floating_terminal'
 require 'settings.options'
 require 'settings.keybinds'
 require 'settings.autocommands'
